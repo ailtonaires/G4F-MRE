@@ -1,13 +1,11 @@
 import "./App.css";
-import BuscaCep from "./pages/BuscaCep/BuscaCep";
-import Noticias from "./pages/Noticias/Noticias";
+import Container from "./pages/Container/Container";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <BuscaCep /> */}
-        <Noticias />
+        <Container />
       </header>
     </div>
   );
