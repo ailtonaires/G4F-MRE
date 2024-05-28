@@ -1,6 +1,6 @@
 export interface Address {
-    logradouro: string;
-    bairro: string;
-    localidade: string;
-    uf: string;
-  }
+  logradouro: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+}
