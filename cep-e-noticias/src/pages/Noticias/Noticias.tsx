@@ -4,22 +4,25 @@ import { api } from "../../config/api";
 
 const Noticias = () => {
   const [noticias, setNoticias] = useState([] as any[]);
-  const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
+  const [titulo, setTitulo] = useState<string>("");
+  const [descricao, setDescricao] = useState<string>("");
   const [editId, setEditId] = useState<number | null>(null);
-  const [editTitulo, setEditTitulo] = useState("");
-  const [editDescricao, setEditDescricao] = useState("");
+  const [editTitulo, setEditTitulo] = useState<string>("");
+  const [editDescricao, setEditDescricao] = useState<string>("");
+  const [error, setError] = useState<any | null>(null);
 
   const fetchNoticias = async () => {
     try {
       const response = await api.get("noticia");
       setNoticias(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar notícias:", error);
+    } catch (error: any) {
+      console.log(error)
+      setError(error.response.data.message || "Erro ao buscar notícias.");
     }
   };
 
-  const createNoticia = async () => {
+  const createNoticia = async (event: React.FormEvent) => {
+    event.preventDefault();
     try {
       const response = await api.post("noticia", {
         titulo,
@@ -28,8 +31,10 @@ const Noticias = () => {
       setNoticias([...noticias, response.data]);
       setTitulo("");
       setDescricao("");
-    } catch (error) {
-      console.error("Erro ao criar notícia:", error);
+    } catch (error: any) {
+      console.log(error);
+      console.log(error.response);
+      setError(error.response.data.message || "Erro ao criar notícia.");
     }
   };
 
@@ -47,7 +52,7 @@ const Noticias = () => {
       setEditTitulo("");
       setEditDescricao("");
     } catch (error) {
-      console.error("Erro ao atualizar notícia:", error);
+      setError("Erro ao atualizar notícia.");
     }
   };
 
@@ -56,7 +61,7 @@ const Noticias = () => {
       await api.delete(`noticia/${id}`);
       setNoticias(noticias.filter((noticia) => noticia.id !== id));
     } catch (error) {
-      console.error("Erro ao deletar notícia:", error);
+      setError("Erro ao deletar notícia.");
     }
   };
 
@@ -66,49 +71,91 @@ const Noticias = () => {
 
   return (
     <div>
-      <h1>Notícias</h1>
-      <input
-        type="text"
-        value={titulo}
-        onChange={(e) => setTitulo(e.target.value)}
-        placeholder="Título"
-      />
-      <input
-        type="text"
-        value={descricao}
-        onChange={(e) => setDescricao(e.target.value)}
-        placeholder="Descrição"
-      />
-      <button onClick={createNoticia}>Adicionar Notícia</button>
-      <ul>
+      <h1 className="title">Criar Notícia</h1>
+
+      <form onSubmit={createNoticia} className="forms">
+        <input
+          className="input-title"
+          type="text"
+          value={titulo}
+          onChange={(e) => {
+            setTitulo(e.target.value);
+            setError(null);
+          }}
+          placeholder="Título"
+          // minLength={5}
+          required
+        />
+        <input
+          className="input-description"
+          type="text"
+          value={descricao}
+          onChange={(e) => {
+            setDescricao(e.target.value);
+            setError(null);
+          }}
+          placeholder="Descrição"
+          // minLength={5}
+          required
+        />
+        <button type="submit" className="button-notice">
+          {" "}
+          Criar Notícia
+        </button>
+      </form>
+      {error && <p className="error">{error}</p>}
+      <div className="notices">
         {noticias.map((noticia: any) => (
-          <li key={noticia.id}>
+          <div key={noticia.id}>
             {editId === noticia.id ? (
-              <div>
+              <form
+                className="notices"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  updateNoticia(noticia.id);
+                }}
+              >
                 <input
+                  className="input-title"
                   type="text"
                   value={editTitulo}
-                  onChange={(e) => setEditTitulo(e.target.value)}
+                  onChange={(e) => {
+                    setEditTitulo(e.target.value);
+                    setError(null);
+                  }}
                   placeholder="Título"
-                  min={5}
+                  minLength={5}
+                  required
                 />
                 <input
+                  className="input-description"
                   type="text"
                   value={editDescricao}
-                  onChange={(e) => setEditDescricao(e.target.value)}
+                  onChange={(e) => {
+                    setEditDescricao(e.target.value);
+                    setError(null);
+                  }}
                   placeholder="Descrição"
-                  min={5}
+                  minLength={5}
+                  required
                 />
-                <button onClick={() => updateNoticia(noticia.id)}>
+                <button className="button-notice" type="submit">
                   Salvar
                 </button>
-                <button onClick={() => setEditId(null)}>Cancelar</button>
-              </div>
-            ) : (
-              <div>
-                <h2>{noticia.titulo}</h2>
-                <p>{noticia.descricao}</p>
                 <button
+                  className="button-notice"
+                  onClick={() => setEditId(null)}
+                  type="button"
+                >
+                  Cancelar
+                </button>
+              </form>
+            ) : (
+              <div className="noticia">
+                <h2 className="titulo">{noticia.titulo}</h2>
+                <p className="descricao">{noticia.descricao}</p>
+                <button
+                  className="button-notice"
                   onClick={() => {
                     setEditId(noticia.id);
                     setEditTitulo(noticia.titulo);
@@ -117,14 +164,17 @@ const Noticias = () => {
                 >
                   Editar
                 </button>
-                <button onClick={() => deleteNoticia(noticia.id)}>
+                <button
+                  className="button-notice"
+                  onClick={() => deleteNoticia(noticia.id)}
+                >
                   Deletar
                 </button>
               </div>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

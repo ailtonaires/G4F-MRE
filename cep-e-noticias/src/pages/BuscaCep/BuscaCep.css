@@ -1,12 +1,38 @@
-div {
-    text-align: center;
-  }
-  
-  input, button {
-    margin: 10px;
-  }
-  
-  button {
-    padding: 5px 10px;
-  }
-  
+/* .color1 { #00ccbe };
+.color2 { #09a6a3 };
+.color3 { #9dbfaf };
+.color4 { #edebc9 };
+.color5 { #fcf9d8 }; */
+
+
+.title {
+  font-size: 2.5em;
+  margin: 20px 0;
+  color: white
+}
+
+.input-cep {
+  width: 300px;
+  padding: 10px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.button-cep {
+  padding: 10px 20px;
+  background-color: #00ccbe;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  color: rgb(255, 0, 0);
+  font-size: 1.5em;
+}
+
+.address {
+  margin: 20px 0;
+  font-size: 1.5em;
+  color: white;
+}
