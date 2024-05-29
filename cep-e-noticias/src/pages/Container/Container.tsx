@@ -1,6 +1,5 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 import BuscaCep from "../BuscaCep/BuscaCep";
 import Noticias from "../Noticias/Noticias";
 import "./Container.css";
@@ -9,8 +8,8 @@ const Container = () => {
   return (
     <div className="container">
       <Tabs>
-        <TabList>
-          <Tab>BuscaCep</Tab>
+        <TabList className="tab-list">
+          <Tab>Busca CEP</Tab>
           <Tab>Noticias</Tab>
         </TabList>
 
