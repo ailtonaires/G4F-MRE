@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./BuscaCep.css";
+import React, { useState } from "react"
 import { api } from "../../config/api";
 import { Address } from "./types";
+import "./BuscaCep.css";
 
 const FindCep = () => {
   const [cep, setCep] = useState<string>("");
@@ -11,11 +10,9 @@ const FindCep = () => {
 
   const handleFind = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Reset error and address state
     setError(null);
     setAddress(null);
 
-    // Validate CEP format
     const cepPattern = /^\d{8}$/;
     if (!cepPattern.test(cep)) {
       setError("CEP inválido. Deve conter exatamente 8 dígitos numéricos.");
@@ -23,31 +20,35 @@ const FindCep = () => {
     }
 
     try {
-      console.log(cep);
       const response = await api.get(`cep/${cep}`);
       setAddress(response.data);
-    } catch (error) {
-      console.error(error);
-      setError("Erro ao buscar o endereço. Por favor, tente novamente.");
+    } catch (error: any) {
+      setError(error.response.data.message);
     }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const { key } = event;
-    // Allow only digits and control keys
-    if (!/^\d$/.test(key) && key !== 'Backspace' && key !== 'Tab' && key !== 'ArrowLeft' && key !== 'ArrowRight') {
+    if (
+      !/^\d$/.test(key) &&
+      key !== "Backspace" &&
+      key !== "Tab" &&
+      key !== "ArrowLeft" &&
+      key !== "ArrowRight"
+    ) {
       event.preventDefault();
     }
   };
 
   return (
     <div>
-      <h1>Buscar Endereço por CEP</h1>
+      <h1 className="title">Buscar CEP</h1>
       <form onSubmit={handleFind} className="form">
         <input
+        className="input-cep"
           type="text"
           value={cep}
-          onChange={(e) => setCep(e.target.value)}
+          onChange={(e) => {setCep(e.target.value); setError(null)}}
           onKeyDown={handleKeyDown}
           placeholder="Digite o CEP"
           maxLength={8}
@@ -55,11 +56,11 @@ const FindCep = () => {
           pattern="\d*"
           required
         />
-        <button type="submit">Buscar</button>
+        <button type="submit" className="button-cep">Buscar</button>
       </form>
       {error && <p className="error">{error}</p>}
       {address && (
-        <div>
+        <div className="address">
           <p>Logradouro: {address.logradouro}</p>
           <p>Bairro: {address.bairro}</p>
           <p>Cidade: {address.localidade}</p>
