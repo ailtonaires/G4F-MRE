@@ -49,17 +49,24 @@ git clone git@github.com:ailtonaires/G4F-MRE.git
 
 2. Acesse a pasta do projeto:
 ```bash
-cd G4F-MRE/cep-e-noticias/
+cd G4F-MRE/
 ```
 
-3. Execute o projeto:
+3. Vá até o arquivo G4F-MRE/cep-e-noticias/src/config/api.ts e descomente a linha 3 e comente a linha 4.
+
+4. Execute o projeto:
 ```bash
-docker-compose up
+make run
 ```
 
-4. Acesse o projeto no navegador:
+5. Acesse o projeto no navegador:
 ```bash
 http://localhost:3000
+```
+
+6. Para derrubar o projeto:
+```bash
+make down
 ```
 
 ## Estrutura do projeto
@@ -68,9 +75,19 @@ http://localhost:3000
 cep-e-noticias/
 .
 ├── Dockerfile
-├── Dockerfile.dev
 ├── README.md
-├── docker-compose.yml
+├── build
+│   ├── asset-manifest.json
+│   ├── favicon.ico
+│   ├── favicon.png
+│   ├── index.html
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json
+│   ├── robots.txt
+│   └── static
+│       ├── css
+│       └── js
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -98,6 +115,7 @@ cep-e-noticias/
 │   ├── reportWebVitals.ts
 │   └── setupTests.ts
 └── tsconfig.json
+
 
 
 
