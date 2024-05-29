@@ -11,7 +11,7 @@ Pré requisitos:
 
 ## Instruções para rodar o projeto sem Docker
 
-Para rodar o projeto localmente (sem Docker):
+Para rodar o projeto localmente (sem Docker e somente o frontend):
 
 1. Clone o repositório:
 ```bash
@@ -28,7 +28,9 @@ cd G4F-MRE
 npm install
 ```
 
-4. Execute o projeto:
+4. Vá até o arquivo G4F-MRE/cep-e-noticias/src/config/api.ts e descomente a linha 4 e comente a linha 3.
+
+5. Execute o projeto:
 ```bash
 npm start
 ```
@@ -40,31 +42,36 @@ http://localhost:3000
 
 ## Instruções para rodar o projeto com Docker
 
-Para rodar o projeto localmente (com Docker):
+Para rodar o projeto localmente (com Docker com o frontend e backend):
 
 1. Clone o repositório:
 ```bash
 git clone git@github.com:ailtonaires/G4F-MRE.git
 ```
 
-2. Acesse a pasta do projeto:
+2. Clone o repositório:
+```bash
+git clone clone git@github.com:ailtonaires/G4F-MRE-API.git
+```
+
+3. Acesse a pasta do projeto:
 ```bash
 cd G4F-MRE/
 ```
 
-3. Vá até o arquivo G4F-MRE/cep-e-noticias/src/config/api.ts e descomente a linha 3 e comente a linha 4.
+4. Vá até o arquivo G4F-MRE-API/src/config/apiNoticias.ts e descomente a linha 3 e comente a linha 4.
 
-4. Execute o projeto:
+5. Execute o projeto:
 ```bash
 make run
 ```
 
-5. Acesse o projeto no navegador:
+6. Acesse o projeto no navegador:
 ```bash
 http://localhost:3000
 ```
 
-6. Para derrubar o projeto:
+7. Para derrubar o projeto:
 ```bash
 make down
 ```
